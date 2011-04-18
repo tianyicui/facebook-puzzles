@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+n = open(ARGV[0]).read.to_i
+(1..n).each do |i|
+  if i % 15 == 0
+    puts 'Hop'
+    next
+  end
+  if i % 3 == 0
+    puts 'Hoppity'
+  end
+  if i % 5 == 0
+    puts 'Hophop'
+  end
+end
