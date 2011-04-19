@@ -8,7 +8,7 @@ D = (0...2*n).to_a
 
 def find x
   y = D[x]
-  x == y ? x : find(y)
+  x == y ? x : D[x] = find(y)
 end
 
 def join x, y
