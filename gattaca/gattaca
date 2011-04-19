@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+f = open(ARGV[0])
+n = f.readline.to_i
+((n+79)/80).times do
+  f.readline
+end
+
+m = f.readline.to_i
+seq = []
+m.times do
+  s = f.readline.split.map{|o| o.to_i}
+  s[0] += 1
+  s[1] += 1
+  seq << s
+end
+seq = seq.sort_by {|o| o[1]}
+seq << [n + 1, n + 1, 0]
+
+S = [0] * (n + 2)
+
+solved = 0
+
+seq.each do |s|
+  start = s[0]
+  stop = s[1]
+  score = s[2]
+  (solved...stop).each do |i|
+    S[i+1] = [S[i+1], S[i]].max
+  end
+  S[stop] = [S[stop], S[start-1] + score].max
+  solved = stop
+end
+
+puts S[n+1]
