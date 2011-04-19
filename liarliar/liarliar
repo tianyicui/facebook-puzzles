@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+f = open(ARGV[0])
+n = f.readline.to_i
+
+S = {}
+D = (0...2*n).to_a
+
+def find x
+  y = D[x]
+  x == y ? x : find(y)
+end
+
+def join x, y
+  x = find x
+  y = find y
+  D[x] = y
+end
+
+def number name
+  name.strip!
+  S[name] or S[name] = S.size
+end
+
+n.times do
+  l = f.readline.split
+  name = l[0]
+  m = l[1].to_i
+  x = number(name)
+  m.times do
+    y = number(f.readline)
+    join x, n + y
+    join y, n + x
+  end
+end
+
+def size x
+  x = D[x]
+  D.select {|i| i == x}.size
+end
+
+(0...D.size).each {|i| D[i] = find i}
+a = size(0) / 2
+b = n - a
+a, b = b, a if a < b
+puts "#{a} #{b}"
